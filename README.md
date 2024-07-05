@@ -60,39 +60,6 @@ Uses self-attention to focus on different parts of the input sequence, ensuring 
 
 Enhances the quality of generated text by exploring multiple sequences.
 
-## Example Usage
-
-```python
-from transformers import GPT2Tokenizer, GPT2LMHeadModel
-import torch
-import nltk
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-import matplotlib.pyplot as plt
-
-# Initialize model and tokenizer
-tokenizer = GPT2Tokenizer.from_pretrained('gpt2-large')
-model = GPT2LMHeadModel.from_pretrained('gpt2-large', pad_token_id=tokenizer.eos_token_id)
-
-# Input sentence
-sentence = input("Enter a sentence to generate text: ")
-numeric_ids = tokenizer.encode(sentence, return_tensors='pt')
-
-# Generate text
-result = model.generate(numeric_ids, max_length=100, num_beams=5, no_repeat_ngram_size=2, early_stopping=True)
-generated_text = tokenizer.decode(result[0], skip_special_tokens=True)
-print(generated_text)
-
-# Sentiment analysis
-sid = SentimentIntensityAnalyzer()
-scores = sid.polarity_scores(generated_text)
-print("Sentiment Scores:", scores)
-
-# Visualization
-tokens = tokenizer.convert_ids_to_tokens(numeric_ids[0])
-plt.figure(figsize=(15, 5))
-plt.bar(range(len(tokens)), [1] * len(tokens), tick_label=tokens)
-plt.show()
-```
 
 ## Interesting References
 
